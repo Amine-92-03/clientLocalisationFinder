@@ -1,7 +1,6 @@
 const app = require('./app')
-require('dotenv').config()
 const dbConnection = require('./utils/dbConnection')
-
+require('dotenv').config()
 dbConnection.connect()
 
 app.listen(process.env.SERVERPORT, () =>{

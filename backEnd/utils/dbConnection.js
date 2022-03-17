@@ -7,7 +7,7 @@ dbConfig = {
     database : process.env.DATABASE,
     port: process.env.PORT
 }
-
+console.log(dbConfig);
 module.exports.connect = ()=>{
     try {
     mysqlconnection = mysql.createConnection(dbConfig)
