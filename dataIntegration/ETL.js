@@ -6,6 +6,7 @@ const dirPath = path.join(__dirname,'dataSources')
 const fileName = 'clientsPourDistancesTot.xlsx'
 const dbConnection = require('./utils/dbConnection')
 const dataChecker = require('./utils/dataChecker')
+const progress = require('./utils/progress')
 dbConnection.connect()
 
 function extractExcelData(dir, fileName){
@@ -30,10 +31,13 @@ function transformDataToMySql(){
 
 function loadDataToMySql(){
     let data =  transformDataToMySql()
+    let i = 0
+    progress.bar.start(data.length,0)
     data.forEach(elm =>{
+        progress.bar.update(i)
         mysqlconnection.query(dataChecker.insertToMySql(elm),(err)=>{
             if(!err){
-                console.log('data well insert !');
+                i++
             }else{
                 console.log('data not insert !')
                 console.log(err);
@@ -41,14 +45,35 @@ function loadDataToMySql(){
         }
         )
     })
+    progress.bar.stop();
+}
+// console.log(progress.bar);
+// loadDataToMySql()
+
+function loadDataToMySql2(){
+    let data =  transformDataToMySql()
+    const dataSize = data.length
+    let k = 0
+    progress.bar.start(dataSize,0)
+    for (let i = 0; i < dataSize; i++) {
+        try {
+            mysqlconnection.query(dataChecker.insertToMySql(data[i]))
+            progress.bar.update(i)
+        } catch (error) {
+            console.log('data not insert !')
+            console.log(error);
+        }
+//  console.log(k);
+    }
+    progress.bar.stop();
 }
 
-loadDataToMySql()
+function sendToBar(index,dataSize){
+    progress.bar.update(index)
+    progress.bar.updateETA()
+}
 
-
-
-
-
+loadDataToMySql2()
 
 
 
