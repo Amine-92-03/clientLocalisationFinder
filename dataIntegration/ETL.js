@@ -54,16 +54,19 @@ function loadDataToMySql2(){
     let data =  transformDataToMySql()
     const dataSize = data.length
     let k = 0
-    progress.bar.start(dataSize,0)
     for (let i = 0; i < dataSize; i++) {
         try {
-            mysqlconnection.query(dataChecker.insertToMySql(data[i]))
-            progress.bar.update(i)
+            mysqlconnection.query(dataChecker.insertToMySql(data[i]),()=>{
+                if(i==0){
+                    progress.bar.start(data.length,i)
+                }
+                progress.bar.update(i)
+            })
+           
         } catch (error) {
             console.log('data not insert !')
             console.log(error);
         }
-//  console.log(k);
     }
     progress.bar.stop();
 }

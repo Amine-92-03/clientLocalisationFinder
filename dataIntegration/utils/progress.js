@@ -1,7 +1,7 @@
 const cliProgress = require('cli-progress')
 
 const opt = {
-    format: 'Loading [{bar}] {percentage}% |  Duration:{duration_formatted} | {value}/{total} | ETA: {eta_formatted}',
+    format: '\nLoading [{bar}] {percentage}% |  Duration:{duration_formatted} | {value}/{total} | ETA: {eta_formatted}',
     // barCompleteChar: '#',
     // barIncompleteChar: '.',
     fps: 25,
