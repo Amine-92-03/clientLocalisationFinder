@@ -60,7 +60,7 @@ function loadDataToMySql2(){
                 if(i==0){
                     progress.bar.start(data.length,i)
                 }
-                progress.bar.update(i)
+                progress.bar.update(i+1)
             })
            
         } catch (error) {
